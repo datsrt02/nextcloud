@@ -1,1 +1,23 @@
+###### Sửa lỗi trust domain ####
+
+Nếu cài bằng docker:
 docker exec --user www-data -it f04ca62a4535 php occ config:system:set trusted_domains 10 --value="nas.datsrt02.uk" # dùng lệnh này nếu bị lỗi trust domains khi truy cập từ domain 
+
+
+Nếu cài thẳng bằng nextcloud VM qua script ttek:
+vào console của nextcloud (có thể vào qua SSH cũng được):
+
+nano /var/www/nextcloud/config/config.php
+
+    <?php
+    $CONFIG = array (
+      'instanceid' => '...',
+      'trusted_domains' =>
+      array (
+        0 => 'your_nextcloud_ip_or_domain',
+        1 => 'new_trusted_domain.com', // Add your new domain here
+      ),
+      // ... other configurations
+    );
+
+systemctl restart apache2
